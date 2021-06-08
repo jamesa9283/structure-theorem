@@ -1,6 +1,6 @@
 # Formalisation of Structure Theorem for Finitely Generated Modules over a Principal Ideal Domains
 
-This is a project for my summer research project into formalising Jordan Normal Form. There are currently two routes that I can use to achieve structure theorem;
+This is a project for my summer research project into formalising Jordan Normal Form. This project is mentioned in [this mathlib issue](https://github.com/leanprover-community/mathlib/issues/4971) There are currently two routes that I can use to achieve structure theorem;
 
 * Defining the Smith Form and then using the fact that a finitely generated module over a p.i.d. is Noetherian, then using representations and using a smith normal form and **wavey handey maths**
 
