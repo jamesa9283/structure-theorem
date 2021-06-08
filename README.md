@@ -4,7 +4,7 @@ This is a project for my summer research project into formalising Jordan Normal 
 
 * Defining the Smith Form and then using the fact that a finitely generated module over a p.i.d. is Noetherian, then using representations and using a smith normal form and **wavey handey maths**
 
-* Finding the torsion submodule for my module, then removing those elements from my module. This leaves a torsion free module, which is isomorphic to R^n and this can be embedded into my original module as a submodule such that it splits the projection map, hence lift the generators and then M = tM \oplus R^n. From there construct some other modules and then direct sum them and they are cyclic **handy handy wavey wavey**
+* Finding the torsion submodule for my module, then removing those elements from my module. This leaves a torsion free module, which is isomorphic to R^n and this can be embedded into my original module as a submodule such that it splits the projection map, hence lift the generators and then M = tM ⊕ ℝⁿ. From there construct some other modules and then direct sum them and they are cyclic **handy handy wavey wavey**
 
 After structure theorem is in place, it should be nice to move forward and implement Jordan Normal Form.
 
