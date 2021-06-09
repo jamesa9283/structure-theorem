@@ -51,6 +51,7 @@ noncomputable def M_iso_Vn (b : basis ι V M) (i : ι)
   right_inv := _, }
 
 
+
 #exit
 
 #check free_of_finite_type_torsion_free' 
