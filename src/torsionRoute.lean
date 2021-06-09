@@ -2,9 +2,9 @@ import linear_algebra.free_module linear_algebra.std_basis data.real.basic
 
 -- we need that a free finitely generated module is isomorphic to ℝⁿ.
 
-variables {R M : Type*} [integral_domain R] [is_principal_ideal_ring R] 
-   [add_comm_group M] [field R] -- I added field here, it *may* break things
-   [module R M]
+variables {V M : Type*} [integral_domain V] [is_principal_ideal_ring V] 
+   [add_comm_group M] [field V] -- I added field here, it *may* break things
+   [module V M]
 
 open module
 
@@ -14,35 +14,35 @@ open module
 
 
 
-variables [module.finite R M] [no_zero_smul_divisors R M]
+variables [module.finite V M] [no_zero_smul_divisors V M]
 /- This defines that our module is finitely generated and torsion free, hence like a 
    'vector space'.
 -/
 
-variables {ι : Type*} [fintype ι] (v : ι → R)
+variables {ι : Type*} [fintype ι] (v : ι → V)
 /- I need to create an orderng, this is done by inputting an element of type ι and then 
-   getting out the element of type R (our 'vector space')
+   getting out the element of type V (our 'vector space')
 -/
 
 variable (n : ℕ)
-#check fin n → R -- this means Rⁿ
+#check fin n → V -- this means Vⁿ
 
-variables (b : basis ι R M) (i : ι)
+variables (b : basis ι V M) (i : ι)
 #check b
-#check M ≃ₗ[R] (ι →₀ R)
+#check M ≃ₗ[V] (ι →₀ V)
 
 open module
 
-#check finite_dimensional.finrank R M
+#check finite_dimensional.finrank V M
 
 -- I'm missing something along the lines of, if a module is finitely generated
 -- and free, then it has a finite basis
 
 -- The way to create a free module is to just define a basis over the module
 
-/- Now it's time to state that M is isomorphic to Rⁿ -/
-noncomputable def M_iso_Rn (b : basis ι R M) (i : ι) (hn : n = finite_dimensional.finrank R M) -- n must be the size of b
-  : M ≃ₗ[R] (fin n → R) := { 
+/- Now it's time to state that M is isomorphic to Vⁿ -/
+noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) (hn : n = finite_dimensional.finrank V M) -- n must be the size of b
+  : M ≃ₗ[V] (fin n → V) := { 
   to_fun := _, 
   inv_fun := λ x, b i, -- use the basis to prove this
   map_smul' := _,
@@ -55,7 +55,7 @@ noncomputable def M_iso_Rn (b : basis ι R M) (i : ι) (hn : n = finite_dimensio
 
 #check basis.equiv_fun _ _ _
 
-#check [finite R M]
-#check basis _ R M
+#check [finite V M]
+#check basis _ V M
 
 #check free_of_finite_type_torsion_free' 
