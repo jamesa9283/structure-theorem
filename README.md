@@ -10,8 +10,12 @@ After structure theorem is in place, it should be nice to move forward and imple
 
 ## Current Progress
 
-I am currently in the infrancy of the project and deciding which route to take. The current goal is to formalise Theorem 3.8 of Jacobson's Basic Algebra I, i.e. every matrix over a pid has a smith form. This is currently stated in `matrixRoute.lean`.
+I am currently in the infancy of the project and deciding which route to take. The current goal is to formalise Theorem 3.8 of Jacobson's Basic Algebra I, i.e. every matrix over a pid has a smith form. This is currently stated in `matrixRoute.lean`.
 
 ## End Goal
 
 To provide mathlib with Jordan Normal Form, then the Structure Theorem for finitely generated albelian groups.
+
+## Thanks
+
+Thanks to my supervisors of this project Dr Tim Hughes and Dr Gihan Marasingha. 
