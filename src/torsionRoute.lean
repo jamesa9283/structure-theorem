@@ -10,6 +10,8 @@ open module
    so find a basis for M\tM and then prove that it's card is n 
 -/
 
+
+
 variables [module.finite R M] [no_zero_smul_divisors R M]
 /- This defines that our module is finitely generated and torsion free, hence like a 
    'vector space'.
@@ -20,12 +22,25 @@ variables {ι : Type*} (v : ι → R)
    getting out the element of type R (our 'vector space')
 -/
 
-variable (b : basis ι R M)
-#check (ι →₀ R)
-#check ι →₀ ℝ
+variable (n : ℕ)
+#check fin n → R -- this means Rⁿ
+
+variables (b : basis ι R M) (i : ι)
+#check b
 #check M ≃ₗ[R] (ι →₀ R)
 
-example : M ≃ₗ[R] (ι →₀ R) := sorry
+open finite_dimensional
+
+/- Now it's time to state that M is isomorphic to Rⁿ -/
+noncomputable def M_iso_Rn (b : basis ι R M) (i : ι) (n : finrank R M) -- n must be the size of b
+  : M ≃ₗ[R] (fin n → R) := { 
+  to_fun := _,
+  inv_fun := λ x, b i, -- use the basis to prove tha
+  map_smul' := _,
+  map_add' := _,
+  left_inv := _,
+  right_inv := _, }
+
 
 #exit
 
