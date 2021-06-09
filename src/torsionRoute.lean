@@ -41,9 +41,9 @@ open module
 -- The way to create a free module is to just define a basis over the module
 
 /- Now it's time to state that M is isomorphic to Vⁿ -/
-noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) (hn : n = finite_dimensional.finrank V M) -- n must be the size of b
-  : M ≃ₗ[V] (fin n → V) := { 
-  to_fun := _, 
+noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) 
+  (hn : n = finite_dimensional.finrank V M) : M ≃ₗ[V] (fin n → V) := { 
+  to_fun := _,  -- need to get a term of V 
   inv_fun := λ x, b i, -- use the basis to prove this
   map_smul' := _,
   map_add' := _,
@@ -53,9 +53,13 @@ noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) (hn : n = finite_dimensio
 
 #exit
 
-#check basis.equiv_fun _ _ _
-
-#check [finite V M]
-#check basis _ V M
-
 #check free_of_finite_type_torsion_free' 
+
+/- Bhavik's comment
+
+hint: you'll want some restrictions on `n` or to change n to be the size of `b` 
+   -> `n` is now the size of `b`, i.e. the dimension of `V`
+also look at the basis api there might be helpful things there 
+iirc there's constructions which look very much like this
+
+-/
