@@ -1,6 +1,6 @@
 import linear_algebra.free_module
 
--- firstly prove that the free 
+-- we need that a free finitely generated module is isomorphic to ℝⁿ.
 
 variables {R M : Type*} [integral_domain R] [is_principal_ideal_ring R] [add_comm_group M] [module R M]
 
