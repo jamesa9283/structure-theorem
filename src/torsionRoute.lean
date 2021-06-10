@@ -43,13 +43,23 @@ open module
 /- Now it's time to state that M is isomorphic to Vⁿ -/
 noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) 
   (hn : n = finite_dimensional.finrank V M) : M ≃ₗ[V] (fin n → V) := { 
-  to_fun := _,  -- need to get a term of V 
+  to_fun := ,  -- need to get a term of V 
+  /- the `to_fun` should be this, letting V = ⟨x₁, ..., xₙ⟩
+     (a₁, ..., aₙ) ↦ a₁x₁ + ... + aₙxₙ
+     no, this is already what I have in `inv_fun`, bugger
+  -/
   inv_fun := λ x, b i, -- use the basis to prove this
   map_smul' := _,
   map_add' := _,
   left_inv := _,
   right_inv := _, }
 
+
+-- M → fin n → V
+variables (f : fin n → M) (g : fin n →₀ V) (h₁ : V → fin n) (h₂ : M → fin n) (h₃ : ι → V )
+#check (finsupp.total (fin n) M V f) -- (fin n →₀ V) →ₗ[V] M
+#check (finsupp.lmap_domain V V g) -- (fin n →₀ V) →ₗ[V] V →₀ V
+#check (finsupp.total (fin n) M V f).comp $ (finsupp.lmap_domain V V h₁) -- (V →₀ V) →ₗ[V] M
 
 #exit
 
