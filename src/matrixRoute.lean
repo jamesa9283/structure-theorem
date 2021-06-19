@@ -25,7 +25,6 @@ lemma pid_matrix_has_smith [decidable_eq n] [decidable_eq m] (A : matrix m n R) 
     (fn : fin r ↪ n),
       ((S : matrix m m R) ⬝ A ⬝ (T : matrix n n R)) = smith_normal a fm fn :=
 begin
-  
   sorry
 end
 

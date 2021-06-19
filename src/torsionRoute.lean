@@ -1,4 +1,5 @@
 import linear_algebra.free_module linear_algebra.std_basis data.real.basic
+import ring_theory.principal_ideal_domain
 
 -- we need that a free finitely generated module is isomorphic to ℝⁿ.
 
@@ -11,8 +12,6 @@ open module
 /- I want to get an isomorphism from a free module to ℝⁿ
    so find a basis for M\tM and then prove that it's card is n 
 -/
-
-
 
 variables [module.finite V M] [no_zero_smul_divisors V M]
 /- This defines that our module is finitely generated and torsion free, hence like a 
@@ -33,16 +32,22 @@ variables (b : basis ι V M) (i : ι)
 
 open module
 
-#check finite_dimensional.finrank V M
+-- #check finite_dimensional.finrank V M
 
 -- I'm missing something along the lines of, if a module is finitely generated
 -- and free, then it has a finite basis
 
 -- The way to create a free module is to just define a basis over the module
 
+/-
+How are product modules written in Lean?
+-/
+
+/-
+
 /- Now it's time to state that M is isomorphic to Vⁿ -/
 noncomputable def M_iso_Vn (b : basis ι V M) (i : ι) 
-  (hn : n = finite_dimensional.finrank V M) : V ≃ₗ[V] (fin n → V) := { 
+  (hn : n = finrank V M) : V ≃ₗ[V] (fin n → V) := { 
   to_fun := _,  -- M → Vⁿ
   /- the `to_fun` should be this, letting M = ⟨x₁, ..., xₙ⟩
      (a₁, ..., aₙ) ↦ a₁x₁ + ... + aₙxₙ
@@ -56,17 +61,22 @@ noncomputable def M_iso_Vn (b : basis ι V M) (i : ι)
   map_add' := _,
   left_inv := _,
   right_inv := _, }
+ -- this isn't needed
 
+
+-/
 
 -- M → fin n → V
+
+
+
+#exit
+
 variables (f : fin n → M) (g : fin n →₀ V) (h₁ : V → fin n) (h₂ : M → fin n) (h₃ : ι → V )
 #check (finsupp.total (fin n) M V f) -- (fin n →₀ V) →ₗ[V] M
 #check (finsupp.lmap_domain V V g) -- (fin n →₀ V) →ₗ[V] V →₀ V
 #check (finsupp.total (fin n) M V f).comp $ (finsupp.lmap_domain V V h₁) -- (V →₀ V) →ₗ[V] M
 
-#exit
-
-#check free_of_finite_type_torsion_free' 
 
 /- Bhavik's comment
 
