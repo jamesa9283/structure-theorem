@@ -13,20 +13,51 @@ variables (I : set(ideal V)) (Iₙ : ℕ → (set I)) (hIₙ : ∀ i j, i < j �
 /-- An ideal is maximal if it is maximal in the collection of proper ideals. -/
 class is_maximal_set (S : set (ideal V)) : Prop := (out : is_coatom S)
 
-#check ⋃ n, Iₙ n
-#check zorn.chain (≤) I
 
-lemma first (I : set (ideal V)) (hI : I.nonempty) {Iₙ : ℕ → (set I)} 
-  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} : Iₙ 0 ⊆ Iₙ n :=
+lemma first_sub_all (I : set (ideal V)) (Iₙ : ℕ → (set I))
+  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} (n : ℕ) : Iₙ 0 ⊆ Iₙ n :=
 begin
-  induction n with h₁ h₂,
+  induction n with m h₂,
   { refl},
-  { 
-    sorry
+  { -- have H : Iₙ n = Iₙ (n + 1),
+    have H := hIₙ m (m + 1) (show m < m + 1, by linarith),
+    tauto
   },
 end
 
-example : n.succ = n + 1 := rfl
+lemma second (I : set (ideal V)) {Iₙ : ℕ → (set I)} 
+  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} (n : ℕ) (a : I) : a ∈ Iₙ 0 → a ∈ Iₙ n := 
+begin
+  have H := first_sub_all I Iₙ n,
+  rw set.subset_def at H,
+  exact H a,
+  exact hIₙ,
+end
+
+/-
+begin
+  induction n with m hm, 
+  { intro x, exact x},
+  { intro a_in_I_zero,
+    specialize hm a_in_I_zero,
+    have H := hIₙ m (m + 1) (show m < m + 1, by linarith),
+    rw set.subset_def at H, 
+    exact H a hm, 
+  },
+end
+-/
+
+lemma third (I : set (ideal V)) {Iₙ : ℕ → (set I)} 
+  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} (a : I) : a ∈ Iₙ 0 → a ∈ ⋃ n, Iₙ n :=
+begin
+  intros ha,
+  rw set.mem_Union,
+  use 0,
+  exact ha,
+end 
+
+#check ⋃ n, Iₙ n
+#check zorn.chain (≤) I
 
 lemma exists_maximal_in_set (I : set (ideal V)) (hI : I.nonempty) {Iₙ : ℕ → (set I)} 
   {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} : ∃ s : I, is_maximal_set I :=
