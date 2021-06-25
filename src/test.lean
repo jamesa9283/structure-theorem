@@ -1,14 +1,14 @@
 import ring_theory.principal_ideal_domain ring_theory.ideal.basic
-import order.zorn
+import order.zorn data.real.basic
 
 variables {V M : Type*} [integral_domain V] [is_principal_ideal_ring V] 
-   [add_comm_group M] [field V] -- I added field here, it *may* break things
+   [add_comm_group M] -- I added field here, it *may* break things
    [module V M]
 
 open module
 open ideal zorn
 
-variables (I : set(ideal V)) (Iₙ : ℕ → (set I)) (hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j) (n : ℕ)
+variables (Iₙ : ℕ → (set (ideal V))) (hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j) (n : ℕ)
 
 /-- An ideal is maximal if it is maximal in the collection of proper ideals. -/
 class is_maximal_set (S : set (ideal V)) : Prop := (out : is_coatom S)
@@ -47,8 +47,8 @@ begin
 end
 -/
 
-lemma third (I : set (ideal V)) {Iₙ : ℕ → (set I)} 
-  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} (a : I) : a ∈ Iₙ 0 → a ∈ ⋃ n, Iₙ n :=
+lemma third (Iₙ : ℕ → (set (ideal V)))
+  (hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j) (a : ideal V) : a ∈ Iₙ 0 → a ∈ ⋃ n, Iₙ n :=
 begin
   intros ha,
   rw set.mem_Union,
@@ -57,15 +57,51 @@ begin
 end 
 
 #check ⋃ n, Iₙ n
-#check zorn.chain (≤) I
+variables (J : set (⋃ n, Iₙ n)) (x : ideal V) (hx : x ∈ Iₙ 0) 
+#check zorn.chain (≤) (Iₙ 0)
+#check nonempty J
+#check J.nonempty
+
+#check third Iₙ hIₙ x hx
+open set
+
+lemma big_union_nonempty {Iₙ : ℕ → set(ideal V)} (hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j) : 
+  (Iₙ 0).nonempty → (⋃ n, Iₙ n).nonempty :=
+begin
+  intros hIₙ, 
+  rw set.nonempty_def at hIₙ,
+  cases hIₙ with x hx,
+  rw set.nonempty_def,
+  use x,
+  exact third Iₙ hIₙ x hx,
+end
+
+example (I : set (ideal V)) : zorn.chain (≤) I :=
+begin
+  rw [zorn.chain, pairwise_on],
+  intros i hi j hj hij,
+  by_cases (i < j),
+  { rw le_iff_lt_or_eq,
+    left, left,
+    exact h,
+  },
+  { right,
+    rw le_iff_lt_or_eq,
+    left,
+    -- rw not_lt at h, -- why are you like this.
+    sorry},
+end
+
+example (i j : ℝ) : i ≤ j → i < j ∨ i = j := lt_or_eq_of_le
+
+#check set.univ (ideal V)
 
 lemma exists_maximal_in_set (I : set (ideal V)) (hI : I.nonempty) {Iₙ : ℕ → (set I)} 
-  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} : ∃ s : I, is_maximal_set I :=
+  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} {J : set (⋃ n, Iₙ n)}
+  : ∃ s : I, is_maximal_set I :=
 begin
-  let J := ⋃ n, Iₙ n,
   have h₁ : J.nonempty,
-  { rw set.nonempty_def,
-    
+  { -- rw union_nonempty,
     sorry},
 
   sorry
