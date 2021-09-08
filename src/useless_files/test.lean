@@ -88,22 +88,22 @@ begin
   { right,
     rw le_iff_lt_or_eq,
     left,
+    -- rw lt_or_eq_of_le,
     -- rw not_lt at h, -- why are you like this.
     sorry},
 end
 
-example (i j : ℝ) : i ≤ j → i < j ∨ i = j := lt_or_eq_of_le
 
-#check set.univ (ideal V)
 
-lemma exists_maximal_in_set (I : set (ideal V)) (hI : I.nonempty) {Iₙ : ℕ → (set I)} 
-  {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j} {J : set (⋃ n, Iₙ n)}
-  : ∃ s : I, is_maximal_set I :=
+
+-- ∃ (m : ?m_1) (H : m ∈ ?m_2), ∀ (z : ?m_1), z ∈ ?m_2 → m ≤ z → z = m
+lemma exists_maximal_in_set (I : set (ideal V)) (H : zorn.chain (≤) I) (hI : I.nonempty)
+  {Iₙ : ℕ → set(ideal V)} {hIₙ : ∀ i j, i < j → Iₙ i ⊆ Iₙ j}
+  : ∃ s ∈ I, ∀ t ∈ I, s ≤ t → t = s:=
 begin
-  have h₁ : J.nonempty,
-  { -- rw union_nonempty,
-    sorry},
-
+  apply zorn.zorn_partial_order₀,
+  intros X hXI XChain,
+  -- use (⨆ n, Iₙ n),
   sorry
 end
 

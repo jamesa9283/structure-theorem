@@ -1,6 +1,9 @@
 import linear_algebra.free_module linear_algebra.std_basis data.real.basic
 import ring_theory.principal_ideal_domain
 
+localized "notation `vector_space` := module" in vectorSpace
+open_locale vectorSpace
+
 -- we need that a free finitely generated module is isomorphic to ℝⁿ.
 
 variables {V M : Type*} [integral_domain V] [is_principal_ideal_ring V] 
